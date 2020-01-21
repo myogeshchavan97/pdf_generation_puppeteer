@@ -2,6 +2,7 @@ const puppeteer = require("puppeteer");
 const path = require('path');
 const express = require('express');
 const app = express();
+const port = process.env.PORT || 5000;
 
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
@@ -49,6 +50,6 @@ app.get('/pdf', async (req, res) => {
     res.sendFile(pdfURL);
 });
 
-app.listen(5000, () => {
-    console.log('server started on port 5000');
+app.listen(port, () => {
+    console.log(`server started on port ${port}`);
 });
