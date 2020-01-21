@@ -8,17 +8,12 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 app.get('/pdf', async (req, res) => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.goto("https://news.ycombinator.com/", {
+    await page.goto(`file:${path.join(__dirname, '..' , 'public', 'lorem.html')}`, {
       waitUntil: "networkidle2"
     });
     await page.setViewport({ width: 1680, height: 1050 });
     const todays_date = new Date();
     const pdfURL = path.join(__dirname, 'files', todays_date.getTime() + '.pdf');
-    await page.addStyleTag({
-      content: `
-      body { border: 1px solid #ccc }
-      `
-    });
     const pdf = await page.pdf({
       path: pdfURL,
       format: "A4",
